@@ -2,7 +2,7 @@
 
 using namespace std;
 
-int main(int argc, char *argv[])
+void printMenu()
 {
     // Print menu
     // 1. Print Help
@@ -22,23 +22,24 @@ int main(int argc, char *argv[])
 
     // 6. Continue
     cout << "6. Continue" << endl;
-    while(true)
+}
+
+int getUserOption()
+{
+    // Get user input (1-6
+    int UserInput;
+    cout << "Type in 1 - 6" << endl;
+    cin >> UserInput;
+    cout << "You entered: " << UserInput << endl;
+    return UserInput;
+}
+
+// function that recieves user option 
+void processUserOption(int userInput)
+{
+    // use switch statement
+    switch (userInput)
     {
-        // Get user input (1-6
-        int UserInput;
-        cout << "Type in 1 - 6" << endl;
-        cin >> UserInput;
-        cout << "You entered: " << UserInput << endl;
-
-        if (UserInput == 0)
-        { // bad input
-            cout << "Exiting" << endl;
-            return 0;
-        } // exit
-
-        // use switch statement
-        switch (UserInput)
-        {
         case 1:
             cout << "Help - Your aim is to make money. Analyze the market, make bids and profits." << endl;
             break;
@@ -59,10 +60,20 @@ int main(int argc, char *argv[])
             break;
         default:
             cout << "Invalid input" << endl;
-            return 0;
-        }
+            break;
     }
+}
 
-
+int main(int argc, char *argv[])
+{
+    // print menu
+    printMenu();
+    while(true)
+    {
+        // get user input
+        int userInput = getUserOption();
+        // process user input
+        processUserOption(userInput);
+    }
     return 0;
 }
