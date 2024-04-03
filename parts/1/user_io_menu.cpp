@@ -9,6 +9,22 @@ enum class OrderBookType { bid, ask };
 class OrderBookEntry
 {
     public:
+
+        OrderBookEntry(
+            double price, 
+            double amount, 
+            string timestamp, 
+            string product, 
+            OrderBookType orderType
+        )
+        {
+            this->price = price;
+            this->amount = amount;
+            this->timestamp = timestamp;
+            this->product = product;
+            this->orderType = orderType;
+        }
+
         double price;
         double amount;
         string timestamp;
@@ -149,12 +165,7 @@ int main(int argc, char *argv[])
     }
     */
 
-   OrderBookEntry order;
-    order.price = 10000.00;
-    order.amount = 0.0001;
-    order.timestamp = "2020/03/17 17:01:24.884492";
-    order.product = "BTC/USDT";
-    order.orderType = OrderBookType::bid;
+   OrderBookEntry order(price, amount, timestamp, product, OrderBookType::ask);
 
     cout << "Price: " << order.price << endl;
 
