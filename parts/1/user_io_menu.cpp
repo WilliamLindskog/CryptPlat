@@ -1,7 +1,20 @@
 #include <iostream>
 #include <map>
+#include <string>
+#include <vector>
 
 using namespace std;
+enum class OrderBookType { bid, ask };
+
+class OrderBookEntry
+{
+    public:
+        double price;
+        double amount;
+        string timestamp;
+        string product;
+        OrderBookType orderType;
+};
 
 void printHelp()
 {
@@ -84,16 +97,66 @@ void processUserOption(int userInput)
 
 }
 
+void printOrderBookType(OrderBookType type)
+{
+    switch(type)
+    {
+        case OrderBookType::bid:
+            cout << "Bid" << endl;
+            break;
+        case OrderBookType::ask:
+            cout << "Ask" << endl;
+            break;
+    }
+}
+
 int main(int argc, char *argv[])
 {
-    // print menu
-    printMenu();
+    // example item in order book
+    double amount = 0.00020075;
+    double price = 5319.450228;
+    string timestamp{"2020/03/17 17:01:24.884492"};
+    string product{"BTC/USDT"};
+    
+    vector<double> prices;
+    vector<double> amounts;
+    vector<string> timestamps;
+    vector<string> products;
+    vector<OrderBookType> orderTypes;
+
+    prices.push_back(price);
+    amounts.push_back(amount);
+    timestamps.push_back(timestamp);
+    products.push_back(product);
+    orderTypes.push_back(OrderBookType::ask);
+
+    cout << "Price: " << prices[0] << endl;
+    cout << "Amount: " << amounts[0] << endl;
+    cout << "Timestamp: " << timestamps[0] << endl;
+    cout << "Product: " << products[0] << endl;
+    printOrderBookType(orderTypes[0]);
+
+
+    /*  
     while(true)
     {
+        // print menu
+        printMenu();
         // get user input
         int userInput = getUserOption();
         // process user input
         processUserOption(userInput);
     }
+    */
+
+   OrderBookEntry order;
+    order.price = 10000.00;
+    order.amount = 0.0001;
+    order.timestamp = "2020/03/17 17:01:24.884492";
+    order.product = "BTC/USDT";
+    order.orderType = OrderBookType::bid;
+
+    cout << "Price: " << order.price << endl;
+
     return 0;
 }
