@@ -30,6 +30,11 @@ class OrderBookEntry
         string timestamp;
         string product;
         OrderBookType orderType;
+
+        double getPrice() const
+        {
+            return price;
+        }
 };
 
 void printHelp()
@@ -64,7 +69,6 @@ void printContinue()
 {
     cout << "Continue" << endl;
 }
-
 
 void printMenu()
 {
@@ -126,11 +130,52 @@ void printOrderBookType(OrderBookType type)
     }
 }
 
+double computeAveragePrice(const vector<OrderBookEntry>& entries)
+{
+    double sum = 0;
+    for (OrderBookEntry obe : entries)
+    {
+        sum += obe.price;
+    }
+    return sum / entries.size();
+}
+
+double computeLowestPrice(const vector<OrderBookEntry>& entries)
+{
+    double lowest = entries[0].price;
+    for (OrderBookEntry obe : entries)
+    {
+        if (obe.price < lowest)
+        {
+            lowest = obe.price;
+        }
+    }
+    return lowest;
+}
+
+double computeHighestPrice(const vector<OrderBookEntry>& entries)
+{
+    double highest = entries[0].price;
+    for (OrderBookEntry obe : entries)
+    {
+        if (obe.price > highest)
+        {
+            highest = obe.price;
+        }
+    }
+    return highest;
+}
+
+double computePriceSpread(const vector<OrderBookEntry>& entries)
+{
+    return computeHighestPrice(entries) - computeLowestPrice(entries);
+}
+
 int main(int argc, char *argv[])
 {
     // example item in order book
     double amount = 0.00020075;
-    double price = 5319.450228;
+    double price = 0.125;
     string timestamp{"2020/03/17 17:01:24.884492"};
     string product{"BTC/USDT"};
     
@@ -165,9 +210,22 @@ int main(int argc, char *argv[])
     }
     */
 
-   OrderBookEntry order(price, amount, timestamp, product, OrderBookType::ask);
+   vector<OrderBookEntry> entries;
 
-    cout << "Price: " << order.price << endl;
+   OrderBookEntry obe1(price, amount, timestamp, product, OrderBookType::ask);
+    OrderBookEntry obe2(5322222.450228, 0.00021, "2020/04/17 17:01:24.884492", "BTC/USDT", OrderBookType::bid);
+
+    entries.push_back(obe1);
+    entries.push_back(obe2);
+
+    for (OrderBookEntry obe : entries)
+    {
+        cout << "Price: " << obe.price << endl;
+        cout << "Amount: " << obe.amount << endl;
+        cout << "Timestamp: " << obe.timestamp << endl;
+        cout << "Product: " << obe.product << endl;
+        printOrderBookType(obe.orderType);
+    }
 
     return 0;
 }
